@@ -7,12 +7,17 @@ return {
     lazy = false,
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
+<<<<<<< HEAD
       vim.g.everforest_background = "medium"
+=======
+      vim.g.everforest_background = "hard"
+>>>>>>> 6a39d3d7286f8349a9988510097f4864602df15f
       vim.g.everforest_enable_italic = 1
       vim.g.everforest_better_performance = 1
       vim.g.everforest_diagnostic_virtual_text = "colored"
       vim.g.everforest_diagnostic_text_highlight = 1
       vim.g.everforest_diagnostic_line_highlight = 1
+      vim.g.everforest_show_eob = 0
     end,
 
     --[[

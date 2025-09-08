@@ -21,6 +21,7 @@ return {
     "catppuccin/nvim",
     lazy = true,
     name = "catppuccin",
+    version = "*",
     opts = {
       transparent_background = true,
       integrations = {
@@ -40,6 +41,23 @@ return {
             hints = { "undercurl" },
             warnings = { "undercurl" },
             information = { "undercurl" },
+          },
+        },
+        background_clear = {
+          "toggleterm",
+          "float_win",
+          -- "renamer",
+          "telescope",
+          "notify",
+          "which-key",
+          -- "nvim-tree",
+          -- "neo-tree",
+          "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
+        }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree", "nvim-tree", "bufferline"
+        plugins = {
+          bufferline = {
+            underline_selected = false,
+            underline_visible = false,
           },
         },
         navic = { enabled = true, custom_bg = "lualine" },
@@ -83,20 +101,20 @@ return {
         },
         inc_search = "background", -- underline | background
         background_clear = {
-          -- "float_win",
           "toggleterm",
+          "float_win",
+          -- "renamer",
           "telescope",
-          -- "which-key",
-          "renamer",
           "notify",
+          "which-key",
           -- "nvim-tree",
           -- "neo-tree",
-          -- "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
+          "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
         }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree", "nvim-tree", "bufferline"
         plugins = {
           bufferline = {
-            underline_selected = false,
-            underline_visible = false,
+            --     underline_selected = false,
+            --     underline_visible = false,
           },
           indent_blankline = {
             context_highlight = "default", -- default | pro

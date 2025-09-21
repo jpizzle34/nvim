@@ -16,7 +16,6 @@ return {
       vim.g.everforest_show_eob = 0
     end,
   },
-
   {
     "catppuccin/nvim",
     lazy = true,
@@ -103,6 +102,7 @@ return {
     --     which_key = true,
     --   },
     -- },
+    --
   },
 
   {

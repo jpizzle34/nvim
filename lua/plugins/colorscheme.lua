@@ -21,13 +21,56 @@ return {
     "catppuccin/nvim",
     lazy = true,
     name = "catppuccin",
-    opts = function(_, opts)
-      local module = require("catppuccin.groups.integrations.bufferline")
-      if module then
-        module.get = module.get_theme
-      end
-      return opts
-    end,
+    version = "*",
+    opts = {
+      transparent_background = true,
+      integrations = {
+        alpha = true,
+        cmp = true,
+        flash = true,
+        gitsigns = true,
+        illuminate = true,
+        indent_blankline = { enabled = true },
+        lsp_trouble = true,
+        mason = true,
+        mini = true,
+        native_lsp = {
+          enabled = true,
+          underlines = {
+            errors = { "undercurl" },
+            hints = { "undercurl" },
+            warnings = { "undercurl" },
+            information = { "undercurl" },
+          },
+        },
+        background_clear = {
+          "toggleterm",
+          "float_win",
+          -- "renamer",
+          "telescope",
+          "notify",
+          "which-key",
+          -- "nvim-tree",
+          -- "neo-tree",
+          "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
+        }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree", "nvim-tree", "bufferline"
+        plugins = {
+          bufferline = {
+            underline_selected = false,
+            underline_visible = false,
+          },
+        },
+        navic = { enabled = true, custom_bg = "lualine" },
+        neotest = true,
+        noice = true,
+        notify = true,
+        neotree = true,
+        semantic_tokens = true,
+        telescope = true,
+        treesitter = true,
+        which_key = true,
+      },
+    },
     -- opts = {
     --   transparent_background = true,
     --   integrations = {
@@ -90,20 +133,20 @@ return {
         },
         inc_search = "background", -- underline | background
         background_clear = {
-          -- "float_win",
           "toggleterm",
+          "float_win",
+          -- "renamer",
           "telescope",
-          -- "which-key",
-          "renamer",
           "notify",
+          "which-key",
           -- "nvim-tree",
           -- "neo-tree",
-          -- "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
+          "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
         }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree", "nvim-tree", "bufferline"
         plugins = {
           bufferline = {
-            underline_selected = false,
-            underline_visible = false,
+            --     underline_selected = false,
+            --     underline_visible = false,
           },
           indent_blankline = {
             context_highlight = "default", -- default | pro

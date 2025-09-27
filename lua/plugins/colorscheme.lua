@@ -16,104 +16,107 @@ return {
       vim.g.everforest_show_eob = 0
     end,
   },
-  -- {
-  --   "catppuccin/nvim",
-  --   lazy = true,
-  --   name = "catppuccin",
-  --   version = "*",
-  --   opts = {
-  --     transparent_background = true,
-  --     integrations = {
-  --       alpha = true,
-  --       cmp = true,
-  --       flash = true,
-  --       gitsigns = true,
-  --       illuminate = true,
-  --       indent_blankline = { enabled = true },
-  --       lsp_trouble = true,
-  --       mason = true,
-  --       mini = true,
-  --       native_lsp = {
-  --         enabled = true,
-  --         underlines = {
-  --           errors = { "undercurl" },
-  --           hints = { "undercurl" },
-  --           warnings = { "undercurl" },
-  --           information = { "undercurl" },
-  --         },
-  --       },
-  --       background_clear = {
-  --         "toggleterm",
-  --         "float_win",
-  --         -- "renamer",
-  --         "telescope",
-  --         "notify",
-  --         "which-key",
-  --         -- "nvim-tree",
-  --         -- "neo-tree",
-  --         "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
-  --       }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree", "nvim-tree", "bufferline"
-  --       plugins = {
-  --         bufferline = {
-  --           underline_selected = false,
-  --           underline_visible = false,
-  --         },
-  --       },
-  --       navic = { enabled = true, custom_bg = "lualine" },
-  --       neotest = true,
-  --       noice = true,
-  --       notify = true,
-  --       neotree = true,
-  --       semantic_tokens = true,
-  --       telescope = true,
-  --       treesitter = true,
-  --       which_key = true,
-  --     },
-  --   },
-  --   -- opts = {
-  --   --   transparent_background = true,
-  --   --   integrations = {
-  --   --     alpha = true,
-  --   --     cmp = true,
-  --   --     flash = true,
-  --   --     gitsigns = true,
-  --   --     illuminate = true,
-  --   --     indent_blankline = { enabled = true },
-  --   --     lsp_trouble = true,
-  --   --     mason = true,
-  --   --     mini = true,
-  --   --     native_lsp = {
-  --   --       enabled = true,
-  --   --       underlines = {
-  --   --         errors = { "undercurl" },
-  --   --         hints = { "undercurl" },
-  --   --         warnings = { "undercurl" },
-  --   --         information = { "undercurl" },
-  --   --       },
-  --   --     },
-  --   --     navic = { enabled = true, custom_bg = "lualine" },
-  --   --     neotest = true,
-  --   --     noice = true,
-  --   --     notify = true,
-  --   --     neotree = true,
-  --   --     semantic_tokens = true,
-  --   --     telescope = true,
-  --   --     treesitter = true,
-  --   --     which_key = true,
-  --   --   },
-  --   -- },
-  --   --
-  -- },
   {
     "catppuccin/nvim",
-    opts = function(_, opts)
-      local module = require("catppuccin.groups.integrations.bufferline")
-      if module then
-        module.get = module.get_theme
+    lazy = true,
+    name = "catppuccin",
+    version = "*",
+    init = function()
+      package.preload["catppuccin.special.bufferline"] = function()
+        local ok, m = pcall(require, "catppuccin.groups.integrations.bufferline")
+        if not ok or type(m) ~= "table" then
+          m = {}
+        end
+        -- Back-compat: LazyVim expects .get_theme; Catppuccin exports .get
+        if not m.get_theme and type(m.get) == "function" then
+          m.get_theme = m.get
+        end
+        return m
       end
+    end,
+    transparent_background = true,
+    --  -- ② keep your opts exactly as before (you can also add bufferline = true here)
+    opts = function(_, opts)
+      -- merge your existing opts
+      opts.transparent_background = true
+      opts.integrations = vim.tbl_deep_extend("force", opts.integrations or {}, {
+        alpha = true,
+        cmp = true,
+        flash = true,
+        gitsigns = true,
+        illuminate = true,
+        indent_blankline = { enabled = true },
+        lsp_trouble = true,
+        mason = true,
+        mini = true,
+        native_lsp = {
+          enabled = true,
+          underlines = {
+            errors = { "undercurl" },
+            hints = { "undercurl" },
+            warnings = { "undercurl" },
+            information = { "undercurl" },
+          },
+        },
+        -- explicitly enable bufferline highlights too
+        -- bufferline = true,
+        navic = { enabled = true, custom_bg = "lualine" },
+        neotest = true,
+        noice = true,
+        notify = true,
+        neotree = true,
+        semantic_tokens = true,
+        telescope = true,
+        treesitter = true,
+        which_key = true,
+      })
       return opts
     end,
+    -- opts = {
+    --   transparent_background = true,
+    --   integrations = {
+    --     alpha = true,
+    --     cmp = true,
+    --     flash = true,
+    --     gitsigns = true,
+    --     illuminate = true,
+    --     indent_blankline = { enabled = true },
+    --     lsp_trouble = true,
+    --     mason = true,
+    --     mini = true,
+    --     native_lsp = {
+    --       enabled = true,
+    --       underlines = {
+    --         errors = { "undercurl" },
+    --         hints = { "undercurl" },
+    --         warnings = { "undercurl" },
+    --         information = { "undercurl" },
+    --       },
+    --     },
+    --     navic = { enabled = true, custom_bg = "lualine" },
+    --     neotest = true,
+    --     noice = true,
+    --     notify = true,
+    --     neotree = true,
+    --     semantic_tokens = true,
+    --     telescope = true,
+    --     treesitter = true,
+    --     which_key = true,
+    --   },
+    -- },
+    --
   },
+  --
+  -- {
+  --   "catppuccin/nvim",
+  --   opts = function(_, opts)
+  --     local module = require("catppuccin.groups.integrations.bufferline")
+  --     if module then
+  --       module.get = module.get_theme
+  --     end
+  --     return opts
+  --   end,
+  -- },
 
   {
     "loctvl842/monokai-pro.nvim",
@@ -151,13 +154,13 @@ return {
           "which-key",
           -- "nvim-tree",
           -- "neo-tree",
-          "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
+          -- "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
         }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree", "nvim-tree", "bufferline"
         plugins = {
-          bufferline = {
-            --     underline_selected = false,
-            --     underline_visible = false,
-          },
+          -- bufferline = {
+          --     underline_selected = false,
+          --     underline_visible = false,
+          -- },
           indent_blankline = {
             context_highlight = "default", -- default | pro
             context_start_underline = false,
